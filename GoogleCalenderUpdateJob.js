@@ -1,11 +1,3 @@
-<html>
-  <head>
-    <script src="//www.parsecdn.com/js/parse-1.6.14.min.js"></script>
-    <script type="text/javascript">
-
-      Parse.initialize("pq4DTXVfCwDskh0CBEfBhwkrDLzBqmo0Q0Fqu8Om");
-      Parse.serverURL = 'localhost:8000/quickstart.html'
-
 
       // Your Client ID can be retrieved from your project in the Google
       // Developer Console, https://console.developers.google.com
@@ -74,7 +66,7 @@
           'timeMin': (new Date()).toISOString(),
           'showDeleted': false,
           'singleEvents': true,
-          'maxResults': 40,
+          'maxResults': 10,
           'orderBy': 'startTime'
         });
 
@@ -109,19 +101,3 @@
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
       }
-
-    </script>
-    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
-    </script>
-  </head>
-  <body>
-    <div id="authorize-div" style="display: none">
-      <span>Authorize access to Google Calendar API</span>
-      <!--Button for the user to click to initiate auth sequence -->
-      <button id="authorize-button" onclick="handleAuthClick(event)">
-        Authorize
-      </button>
-    </div>
-    <pre id="output"></pre>
-  </body>
-</html>
