@@ -69,9 +69,11 @@
        * appropriate message is printed.
        */
       function listUpcomingEvents() {
-        var request = gapi.client.calendar.events.list({
+        var nowDate = (new Date()).toISOString()
+        var request = gapi.client.calendar.events.watch({  //function that pulls the updated list
           'calendarId': 'primary',
-          'timeMin': (new Date()).toISOString(),
+          'timeMin': nowDate,
+          'timeMax': nowDate + 1.21e+9
           'showDeleted': false,
           'singleEvents': true,
           'maxResults': 40,
@@ -89,7 +91,26 @@
               if (!when) {
                 when = event.start.date;
               }
-              appendPre(event.summary + ' (' + when + ')')
+              var ParseEvents = Parse.Object.extend("DummyEvents");
+              var parseEvent = new ParseEvents();
+
+            parseEvent.set("event_description", event.description);
+            parseEvent.set("event_end", event.end.date);
+            parseEvent.set("event_location", event.location);
+            parseEvent.set("cheatMode", false);
+            parseEvent.set("event_start",event.originalStartTime.date)
+
+            parseEvent.save(null, {
+            success: function(gameScore) {
+              // Execute any logic that should take place after the object is saved.
+              alert('New object created with objectId: ' + parseEvent.id);
+            },
+            error: function(gameScore, error) {
+              // Execute any logic that should take place if the save fails.
+              // error is a Parse.Error with an error code and message.
+              alert('Failed to create new object, with error code: ' + error.message);
+            }
+          });
             }
           } else {
             appendPre('No upcoming events found.');
